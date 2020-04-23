@@ -1,5 +1,6 @@
 package com.currencyconverter.service.impl;
 
+import com.currencyconverter.exception.ApplicationException;
 import com.currencyconverter.model.dto.ConversionRequest;
 import com.currencyconverter.model.dto.ConversionResponse;
 import com.currencyconverter.service.CurrencyConverter;
@@ -36,6 +37,6 @@ public class CurrencyConverterImpl implements CurrencyConverter {
                                 .amount(conversionRequest.getAmount())
                                 .converted(rate * conversionRequest.getAmount())
                                 .build()
-                );
+                ).onErrorMap(error -> new ApplicationException("No possibility to fetch exchange rates."));
     }
 }
